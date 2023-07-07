@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    user: root
+    container_name: prometheus
+    restart: always
+    volumes:
+      - ./:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.prometheus.entrypoints=web
+      - traefik.http.routers.prometheus.rule=Host(`prometheus.vm.slimprepdevops.com`)
+      # - traefik.http.routers.prometheus.service=prometheus
+      # - traefik.http.services.prometheus.loadbalancer.server.port=9090
+      # - traefik.docker.network=proxy
+
+volumes:
+  prometheus_data: {}
+
+networks:
+  default:
+    external:
+      name: proxy

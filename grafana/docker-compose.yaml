@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./config.monitoring
+    user: "104"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.grafana.entrypoints=web
+      - "traefik.http.routers.grafana.rule=Host(`grafana.vm.slimprepdevops.com`)"
+      - "traefik.http.routers.grafana.service=grafana"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
+
+volumes:
+  grafana_data: {}
+
+networks:
+  default:
+    external:
+      name: proxy
