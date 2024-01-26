@@ -55,3 +55,21 @@ groups:
         annotations:
           summary: "CPU Usage is high"
           description: "There is high activity on you server. be advised"
+          
+      - alert: service_drop
+        expr: count(traefik_service_open_connections) < 7
+        for: 1m
+        labels:
+          severity: high
+        annotations:
+          summary: "CPU Usage is high"
+          description: "There is high activity on you server. be advised"
+          
+      - alert: high_request_inbound
+        expr: sum(increase(traefik_service_requests_total{protocol=~"http", code="200"}[1m])) > 3000
+        for: 1m
+        labels:
+          severity: high
+        annotations:
+          summary: "High request detected"
+          description: "System has detected a high number of request in one minute. be advised"
