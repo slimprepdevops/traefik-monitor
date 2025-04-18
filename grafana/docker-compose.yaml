@@ -23,11 +23,12 @@ services:
           - node.role == manager
       restart_policy:
         condition: on-failure
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
 
 volumes:
   grafana_data: {}
-
-networks:
-  default:
-    external:
-      name: proxy

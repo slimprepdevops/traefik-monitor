@@ -17,8 +17,9 @@ services:
       - traefik.http.routers.goapp-https.tls=true
       - traefik.http.routers.goapp-https.tls.certresolver=mytlschallenge
       - traefik.http.middlewares.goapp-redirect-to-https.redirectscheme.scheme=https
+    networks:
+      - proxy
 
 networks:
-  default:
-    external:
-      name: proxy
+  proxy:
+    external: true
