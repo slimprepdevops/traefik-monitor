@@ -2,7 +2,7 @@
 Run the following commands one at a time
 
 ```bash
-sh traefikssl.sh
+bash traefikssl.sh
 ```
 
 ```bash
