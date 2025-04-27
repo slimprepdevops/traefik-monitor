@@ -10,7 +10,7 @@ sh docker.sh
 ```
 
 ```bash
-sh up.sh
+bash up.sh
 ```
 
 Enable Docker Metrics
@@ -29,3 +29,5 @@ update / add this to the file
 save and exit
 
 and run `sudo systemctl restart docker`
+
+Note: to shut down all docker services, run `bash down.sh`
