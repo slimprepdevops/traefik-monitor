@@ -18,11 +18,12 @@ services:
       - "traefik.http.routers.grafana.service=grafana"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
       - "traefik.docker.network=proxy"
+    networks:
+      - proxy
 
 volumes:
   grafana_data: {}
 
 networks:
-  default:
-    external:
-      name: proxy
+  proxy:
+    external: true

@@ -1,0 +1,38 @@
+version: '3.3'
+
+services:
+  node-exporter:
+    container_name: node-exporter
+    image: prom/node-exporter:latest
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - "9100:9100"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.node-exporter-http.entrypoints=web
+      - traefik.http.routers.node-exporter-http.rule=Host(`node-exporter.vm.slimprepdevops.com`)
+      - traefik.http.routers.node-exporter-http.middlewares=node-exporter-redirect-to-https
+      # HTTPS router
+      - traefik.http.routers.node-exporter-https.entrypoints=web-secured
+      - traefik.http.routers.node-exporter-https.rule=Host(`node-exporter.vm.slimprepdevops.com`)
+      - traefik.http.routers.node-exporter-https.tls=true
+      - traefik.http.routers.node-exporter-https.tls.certresolver=mytlschallenge
+      - traefik.http.middlewares.node-exporter-redirect-to-https.redirectscheme.scheme=https
+    networks:
+      - proxy
+      
+volumes:
+  alertmanager-data: {}
+
+networks:
+  proxy:
+    external: true

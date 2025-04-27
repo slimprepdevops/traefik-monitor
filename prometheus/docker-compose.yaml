@@ -21,11 +21,12 @@ services:
       # - traefik.http.routers.prometheus.service=prometheus
       # - traefik.http.services.prometheus.loadbalancer.server.port=9090
       # - traefik.docker.network=proxy
+    networks:
+      - proxy
 
 volumes:
   prometheus_data: {}
 
 networks:
-  default:
-    external:
-      name: proxy
+  proxy:
+    external: true

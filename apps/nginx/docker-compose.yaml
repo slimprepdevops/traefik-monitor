@@ -16,8 +16,9 @@ services:
       - traefik.http.routers.nginx-https.tls=true
       - traefik.http.routers.nginx-https.tls.certresolver=mytlschallenge
       - traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.scheme=https
+    networks:
+      - proxy
 
 networks:
-  default:
-    external:
-      name: proxy
+  proxy:
+    external: true

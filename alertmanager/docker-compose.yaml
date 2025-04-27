@@ -16,11 +16,12 @@ services:
       - traefik.http.routers.alertmanager.entrypoints=web
       - "traefik.http.routers.alertmanager.rule=Host(`alertmanager.vm.slimprepdevops.com`)"
       - "traefik.docker.network=proxy"
+    networks:
+      - proxy
       
 volumes:
   alertmanager-data: {}
 
 networks:
-  default:
-    external:
-      name: proxy
+  proxy:
+    external: true
