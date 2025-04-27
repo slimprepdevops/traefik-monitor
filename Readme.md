@@ -1,11 +1,17 @@
 ## File structure for Traefik (http and https)
+Run the following commands one at a time
 
-note: delete the contents of /trafeik/letsencrypt/acme.json or make it blank before use
+```bash
+sh traefikssl.sh
+```
 
+```bash
+sh docker.sh
+```
 
-Assign yourselves someone to create a deploy bash script to install docker and deploy all of there resources at once,
-
-Assign yourselves someone (the champion) to add node-exporte docker image, scapre it with prometheus and add to grafana
+```bash
+sh up.sh
+```
 
 Enable Docker Metrics
 
