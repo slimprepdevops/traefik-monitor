@@ -16,7 +16,7 @@ sh up.sh
 Enable Docker Metrics
 
 ```bash
-cd /etc/docker/daemon.json
+sudo nano /etc/docker/daemon.json
 ```
 
 update / add this to the file
